@@ -1,0 +1,90 @@
+#!/bin/bash
+cd /app
+
+# Check if the packages destination is a directory
+if [ ! -d "/app/packages" ]; then
+	echo -e "\033[1;31mDestination directory does not exist\033[0m"
+	exit 1
+fi
+
+# Check if the packages destination is empty
+if [ ! -z "$(ls -A /app/packages)" ]; then
+	echo -e "\033[1;31mDestination directory is not empty\033[0m"
+	exit 1
+fi
+
+# Announce that the build process is starting
+figlet provoice
+echo -e "\033[1;32mProVoice packages build environment for rtpengine using Docker\033[0m\n"
+echo "MediaServe International B.V."
+echo "https://github.com/ProVoice"
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+
+# Build bcg729 packages
+
+cd /app/bcg729
+
+# Create the updated version
+rm debian/changelog
+DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch --create --package "bcg729" --newversion "${BCG729_VERSION}" "Release for ProVoice on Ubuntu 20.04 LTS"
+DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -l+provoice ""
+DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -r ""
+
+# Install the dependencies
+apt update
+mk-build-deps
+apt install -f -y ./bcg729-build-deps_*.deb
+rm ./bcg729-build-deps_*.deb
+
+# Allow creating the source file
+mkdir -p debian/source
+echo 1 > debian/source/format
+
+# Build the source and packages files
+debuild -i -us -uc
+
+( cd /app; apt install -f -y ./*.deb )
+
+# Build rtpengine packages
+
+cd /app/rtpengine
+
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+
+# Create the updated version
+rm debian/changelog
+DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch --create --package "rtpengine" --newversion "${RTPENGINE_VERSION}" "Release for ProVoice on Ubuntu 20.04 LTS"
+DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -l+provoice ""
+DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -r ""
+
+# Remove the ngcp prefix
+find -type f -print0 | xargs -0 sed -i 's/ngcp\-//g'
+( cd debian; find . -depth -name '*ngcp-*' -execdir bash -c 'for f; do mv -i "$f" "${f//ngcp-/}"; done' bash {} + )
+
+# Install the dependencies
+apt update
+mk-build-deps
+apt install -f -y ./rtpengine-build-deps_*.deb
+rm ./rtpengine-build-deps_*.deb
+
+# Allow creating the source file
+mkdir -p debian/source
+echo 1 > debian/source/format
+
+# Build the source and packages files
+debuild -i -us -uc
+
+# Copy the debian files to the destination
+rsync -Sxt \
+ --exclude README.md \
+ --exclude LICENSE \
+ --exclude Dockerfile \
+ --exclude build-packages \
+ --exclude rtpengine \
+ --exclude bcg729 \
+ --exclude packages \
+/app/* /app/packages
+
+# Announce that the build process is done
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+echo -e "\033[1;32mBuild process has completed\033[0m"
