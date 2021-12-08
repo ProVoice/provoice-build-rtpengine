@@ -1,7 +1,7 @@
 [submodule "rtpengine"]
 	path = rtpengine
 	url = https://github.com/ProVoice/rtpengine.git
-	branch = mr9.3
+	branch = master
 [submodule "bcg729"]
 	path = bcg729
 	url = https://github.com/ProVoice/bcg729.git

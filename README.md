@@ -29,7 +29,7 @@ sudo docker run -it \
  --rm \
  -v `pwd`/packages:/app/packages \
  -e BCG729_VERSION='1.1.1' \
- -e RTPENGINE_VERSION='9.3.2.0' \
+ -e RTPENGINE_VERSION='10.3.0.0' \
 provoice-build-rtpengine
 ```
 The packages and source files should now be in the `packages` directory and ready to install on Ubuntu 20.04 LTS.
