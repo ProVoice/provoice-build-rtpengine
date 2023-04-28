@@ -3,7 +3,7 @@ ProVoice packages build environment for rtpengine using Docker
 
 ## About
 
-This project aims to make reproducable Debian packages of rtpengine for Ubuntu 20.04 LTS by using Docker. We have chosen to use upstream MySQL packages instead of the default packages in the Ubuntu repository. Feel free to remove these lines in the Dockerfile if that would fit your environment better. Create an empty directory for the packages and run the container to build the Debian packages.
+This project aims to make reproducable Debian packages of rtpengine for Ubuntu 22.04 LTS by using Docker. We have chosen to use upstream MySQL packages instead of the default packages in the Ubuntu repository. Feel free to remove these lines in the Dockerfile if that would fit your environment better. Create an empty directory for the packages and run the container to build the Debian packages.
 
 In this build we are removing the `ngcp-` prefix for the packages and file names. The `debian` source files in the `bcg729` package have been copied from the `bcg729` package in the Ubuntu repository. Version numbers for the packages have to be set through environmental variables while running the Docker container.
 
@@ -17,6 +17,7 @@ git clone https://github.com/ProVoice/provoice-build-rtpengine.git
 cd provoice-build-rtpengine
 git submodule init
 git submodule update --remote
+( cd rtpengine; git checkout mr11.3.1.1 )
 sudo docker build -t provoice-build-rtpengine .
 ```
 2. Create a directory for the packages
@@ -29,7 +30,7 @@ sudo docker run -it \
  --rm \
  -v `pwd`/packages:/app/packages \
  -e BCG729_VERSION='1.1.1' \
- -e RTPENGINE_VERSION='10.3.0.0' \
+ -e RTPENGINE_VERSION='11.3.1.1' \
 provoice-build-rtpengine
 ```
 The packages and source files should now be in the `packages` directory and ready to install on Ubuntu 20.04 LTS.

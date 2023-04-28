@@ -26,7 +26,7 @@ cd /app/bcg729
 
 # Create the updated version
 rm debian/changelog
-DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch --create --package "bcg729" --newversion "${BCG729_VERSION}" "Release for ProVoice on Ubuntu 20.04 LTS"
+DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch --create --package "bcg729" --newversion "${BCG729_VERSION}" "Release for ProVoice on Ubuntu 22.04 LTS"
 DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -l+provoice ""
 DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -r ""
 
@@ -53,7 +53,7 @@ printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 
 # Create the updated version
 rm debian/changelog
-DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch --create --package "rtpengine" --newversion "${RTPENGINE_VERSION}" "Release for ProVoice on Ubuntu 20.04 LTS"
+DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch --create --package "rtpengine" --newversion "${RTPENGINE_VERSION}" "Release for ProVoice on Ubuntu 22.04 LTS"
 DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -l+provoice ""
 DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -r ""
 
