@@ -18,7 +18,7 @@ cd provoice-build-rtpengine
 git submodule init
 git submodule update --remote
 ( cd bcg729; git checkout provoice/1.1.1 )
-( cd rtpengine; git checkout mr13.0.1.3 )
+( cd rtpengine; git checkout mr13.2.1.6 )
 sudo docker build -t provoice-build-rtpengine .
 ```
 2. Create a directory for the packages
@@ -31,7 +31,7 @@ sudo docker run -it \
  --rm \
  -v `pwd`/packages:/app/packages \
  -e BCG729_VERSION='1.1.1' \
- -e RTPENGINE_VERSION='13.0.1.3' \
+ -e RTPENGINE_VERSION='13.2.1.6' \
 provoice-build-rtpengine
 ```
 The packages and source files should now be in the `packages` directory and ready to install on Ubuntu 24.04 LTS.
