@@ -57,6 +57,9 @@ DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch --create --package "rtpengin
 DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -l+provoice ""
 DEBEMAIL="Thomas Lobker <thomas@mediaserve.nl>" dch -r ""
 
+# Apply patches
+find /app/patches -name '*.patch' -exec git apply '{}' \;
+
 # Remove the ngcp prefix
 find -type f -print0 | xargs -0 sed -i 's/ngcp\-//g'
 ( cd debian; find . -depth -name '*ngcp-*' -execdir bash -c 'for f; do mv -i "$f" "${f//ngcp-/}"; done' bash {} + )

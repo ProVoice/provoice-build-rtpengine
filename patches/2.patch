@@ -1,0 +1,17 @@
+diff --git a/kernel-module/nft_rtpengine.c b/kernel-module/nft_rtpengine.c
+index b50e0d96..a8c84db8 100644
+--- a/kernel-module/nft_rtpengine.c
++++ b/kernel-module/nft_rtpengine.c
+@@ -6843,11 +6843,7 @@ static int rtpengine_expr_dump(struct sk_buff *skb, const struct nft_expr *expr
+ 	return 0;
+ }
+ 
+-static int rtpengine_expr_validate(const struct nft_ctx *ctx, const struct nft_expr *expr
+-#if LINUX_VERSION_CODE < KERNEL_VERSION(6,12,0)
+-		, const struct nft_data **data
+-#endif
+-)
++static int rtpengine_expr_validate(const struct nft_ctx *ctx, const struct nft_expr *expr)
+ {
+ 	return nft_chain_validate_hooks(ctx->chain, (1 << NF_INET_LOCAL_IN));
+ }

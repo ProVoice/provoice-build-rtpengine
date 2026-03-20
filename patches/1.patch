@@ -1,0 +1,65 @@
+diff --git a/debian/control b/debian/control
+index 10e98431..549a93d2 100644
+--- a/debian/control
++++ b/debian/control
+@@ -54,6 +54,7 @@ Build-Depends:
+  systemd-dev | systemd,
+  zlib1g-dev,
+ Testsuite: autopkgtest-pkg-dkms
++Priority: optional
+ 
+ Package: ngcp-rtpengine-daemon
+ Architecture: any
+@@ -79,6 +80,7 @@ Replaces:
+ Description: proxy for RTP and media streams used in NGCP, userspace part
+  This daemon handles the first stages of proxying media streams and talks to
+  the kernel part of the proxy for eventual high-performance packet forwarding.
++Priority: optional
+ 
+ Package: ngcp-rtpengine-recording-daemon
+ Architecture: any
+@@ -95,6 +97,7 @@ Suggests:
+  ngcp-system-tools,
+ Description: recording daemon for RTP and media streams
+  This daemon handles the call recording (media intercept) component of rtpengine.
++Priority: optional
+ 
+ Package: ngcp-rtpengine
+ Architecture: all
+@@ -110,6 +113,7 @@ Description: NGCP RTP/media proxy - meta package
+  This is a meta package for easy installation of all four parts of the NGCP
+  media proxy. It will install the user-space daemon, the kernel-space nftables
+  module, the nftables extension module and utility scripts.
++Priority: optional
+ 
+ Package: ngcp-rtpengine-kernel-dkms
+ Architecture: all
+@@ -123,6 +127,7 @@ Description: nftables kernel module for the NGCP media proxy - DKMS
+  Provides the kernel-space part of the NGCP media proxy for high-
+  performance packet forwarding.
+  This package contains the source to be built with dkms.
++Priority: optional
+ 
+ Package: ngcp-rtpengine-utils
+ Architecture: all
+@@ -141,6 +146,7 @@ Depends:
+  ${perl:Depends},
+ Description: scripts and Perl modules for NGCP rtpengine
+  This package contains scripts and Perl modules for NGCP rtpengine
++Priority: optional
+ 
+ Package: ngcp-rtpengine-perftest
+ Architecture: any
+@@ -153,6 +159,7 @@ Depends:
+ Description: helper tool to test rtpengine transcoding performance
+  This interactive tool simulates transcoding scenarios using the rtpengine code
+  base and produces performance and load statistics.
++Priority: optional
+ 
+ Package: ngcp-rtpengine-perftest-data
+ Architecture: all
+@@ -166,3 +173,4 @@ Description: helper tool to test rtpengine transcoding performance - data files
+  base and produces performance and load statistics.
+  .
+  These are data files needed for the binary package.
++Priority: optional
